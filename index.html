@@ -1,0 +1,319 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>28기 합격자 발표 캘린더</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&family=Quicksand:wght@600;700&display=swap">
+<style>
+/* Layout: 입시포털형 — 상단 검색바 + 원형 아이콘 메뉴 + 브레드크럼 + 타이틀 밴드 + (왼쪽 사이드바 | 오른쪽 표) */
+:root{
+  --bg:#FFFFFF; --soft:#EEF6F7; --panel:#F3F4F6; --ink:#111111; --text:#333A40; --muted:#6B7280; --line:#E3E6EA; --line-strong:#111111;
+  --brand:#0E8A9C; --brand-2:#1AA5AE; --brand-ink:#FFFFFF; --btn-dark:#333333;
+  --stage:#2F5BFF; --stage-bg:#E8EEFF; --final:#D9730D; --final-bg:#FFF0E0;
+  --today:#E0313E; --today-bg:#FFE9EB; --chip:#F1F3F5; --shadow:0 2px 10px rgba(17,24,39,.08);
+  --f-body:"Noto Sans KR","Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+  --f-logo:"Quicksand","Noto Sans KR",sans-serif;
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#12171C; --soft:#16262A; --panel:#1C232A; --ink:#F2F4F6; --text:#D4DAE0; --muted:#94A0AC; --line:#2B343D; --line-strong:#D4DAE0;
+  --brand:#3FC1CD; --brand-2:#5FD0D8; --brand-ink:#08262A; --btn-dark:#4A5560;
+  --stage:#7C9BFF; --stage-bg:#1C2747; --final:#F5A04A; --final-bg:#3A2614;
+  --today:#FF6B75; --today-bg:#3D1A1E; --chip:#232C35; --shadow:0 2px 10px rgba(0,0,0,.4); color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#12171C; --soft:#16262A; --panel:#1C232A; --ink:#F2F4F6; --text:#D4DAE0; --muted:#94A0AC; --line:#2B343D; --line-strong:#D4DAE0;
+  --brand:#3FC1CD; --brand-2:#5FD0D8; --brand-ink:#08262A; --btn-dark:#4A5560;
+  --stage:#7C9BFF; --stage-bg:#1C2747; --final:#F5A04A; --final-bg:#3A2614;
+  --today:#FF6B75; --today-bg:#3D1A1E; --chip:#232C35; --shadow:0 2px 10px rgba(0,0,0,.4); color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:var(--f-body);font-size:15px;line-height:1.5}
+.in{max-width:1180px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+button{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--brand);outline-offset:2px}
+
+/* top bar */
+.top .in{display:flex;align-items:center;gap:20px;padding-block:18px 10px;flex-wrap:wrap}
+.logo{font-family:var(--f-logo);font-weight:700;font-size:34px;color:var(--brand);letter-spacing:-.5px;text-decoration:none;line-height:1}
+.logo small{display:block;font-family:var(--f-body);font-size:11px;font-weight:500;color:var(--muted);letter-spacing:0;margin-top:2px}
+.sbar{flex:1 1 320px;max-width:620px;margin:0 auto;display:flex;align-items:center;border:2px solid var(--brand);border-radius:999px;padding:0 8px 0 24px;height:56px;background:var(--bg);min-width:0}
+.sbar input{flex:1;min-width:0;border:0;outline:0;background:transparent;font:inherit;font-size:16px;color:var(--ink)}
+.sbar input::placeholder{color:var(--muted)}
+.sbar button{border:0;background:transparent;width:44px;height:44px;display:grid;place-items:center;cursor:pointer;color:var(--brand)}
+.nextpill{display:flex;align-items:center;gap:10px;font-weight:700;color:var(--ink);white-space:nowrap}
+.nextpill .dot{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;color:#fff;font-size:12px;font-weight:900;
+  background:linear-gradient(135deg,var(--brand-2),#3B82F6)}
+
+/* icon menu */
+.menu{overflow-x:auto;scrollbar-width:none}
+.menu::-webkit-scrollbar{display:none}
+.menu .in{display:flex;gap:6px;padding-block:8px 18px;min-width:max-content}
+.mi{display:grid;justify-items:center;gap:12px;width:128px;border:0;background:transparent;cursor:pointer;padding:6px 0}
+.mi .c{width:84px;height:84px;border-radius:50%;background:var(--bg);box-shadow:var(--shadow);display:grid;place-items:center;border:2px solid transparent;transition:border-color .15s}
+.mi svg{width:40px;height:40px}
+.mi span{font-size:16px;font-weight:500;color:var(--ink)}
+.mi .n{font-size:12px;color:var(--muted);margin-top:-8px}
+.mi[aria-pressed="true"] .c{border-color:var(--brand)}
+.mi[aria-pressed="true"] span{color:var(--brand);font-weight:700}
+.mi:hover .c{border-color:var(--line)}
+
+/* breadcrumb + band */
+.band{background:var(--soft)}
+.band .in{padding-block:18px 26px}
+.crumb{display:flex;align-items:center;gap:10px;font-size:15px;color:var(--text);flex-wrap:wrap}
+.crumb b{color:var(--ink)}
+.crumb svg{width:22px;height:22px;color:var(--muted)}
+.crumb .sep{color:var(--muted)}
+.band h1{margin:16px 0 0;text-align:center;font-size:clamp(26px,4vw,36px);font-weight:900;color:var(--ink);letter-spacing:-.5px}
+
+/* body */
+.body .in{display:grid;grid-template-columns:330px 1fr;gap:56px;padding-block:44px 64px}
+aside{display:grid;gap:14px;align-content:start;min-width:0}
+.tabs{display:grid;grid-template-columns:1fr 1fr;border:1px solid var(--line);border-radius:8px;overflow:hidden}
+.tabs button{border:0;background:var(--bg);padding:14px 0;font-size:17px;color:var(--text);cursor:pointer}
+.tabs button[aria-pressed="true"]{background:var(--brand);color:var(--brand-ink);font-weight:700}
+.sel{position:relative}
+.sel select{appearance:none;width:100%;font:inherit;font-size:17px;padding:14px 44px 14px 22px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink);cursor:pointer}
+.sel::after{content:"";position:absolute;right:20px;top:50%;margin-top:-4px;border:7px solid transparent;border-top:9px solid var(--text);border-bottom:0}
+.sbox{display:flex;background:var(--panel);border-radius:8px;overflow:hidden}
+.sbox input{flex:1;min-width:0;border:0;background:transparent;padding:16px 20px;font:inherit;font-size:15px;color:var(--ink);outline:0}
+.sbox button{width:56px;border:0;background:var(--btn-dark);color:#fff;cursor:pointer;display:grid;place-items:center}
+.card{border:1px solid var(--line);border-radius:10px;padding:18px 20px;display:grid;gap:6px}
+.card .lbl{font-size:13px;font-weight:700;color:var(--brand)}
+.card .dd{font-size:40px;font-weight:900;color:var(--ink);line-height:1.1}
+.card .sub{font-size:14px;color:var(--text)}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.stat{border:1px solid var(--line);border-radius:8px;padding:10px 12px;font-size:13px;color:var(--muted);background:var(--bg);text-align:left;cursor:pointer}
+.stat b{display:block;font-size:20px;color:var(--ink);font-weight:700}
+.stat.past b{color:var(--muted)}
+.stat:hover{border-color:var(--brand)}
+.legend{display:flex;flex-wrap:wrap;gap:8px;font-size:12.5px;color:var(--muted)}
+
+main{min-width:0}
+.total{font-size:clamp(22px,3vw,28px);font-weight:700;color:var(--ink);margin:6px 0 22px;display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+.total em{font-style:normal;color:var(--brand)}
+.total small{font-size:14px;font-weight:400;color:var(--muted)}
+.tw{overflow-x:auto}
+table{width:100%;border-collapse:collapse;border-top:2px solid var(--line-strong);min-width:640px}
+th{font-size:16px;font-weight:500;color:var(--ink);padding:16px 10px;border-bottom:1px solid var(--line);white-space:nowrap}
+th .srt{display:inline-grid;place-items:center;width:20px;height:20px;border:1px solid var(--line);border-radius:3px;margin-left:6px;vertical-align:middle;font-size:9px;color:var(--text);background:var(--bg);cursor:pointer}
+th .srt[data-on="1"]{border-color:var(--brand);color:var(--brand)}
+td{padding:14px 10px;border-bottom:1px solid var(--line);vertical-align:middle;font-size:15px}
+td.d{text-align:center;white-space:nowrap}
+td.d .md{font-size:18px;font-weight:700;color:var(--ink)}
+td.d .wd{font-size:13px;color:var(--muted)}
+tr.cont td.d > *{visibility:hidden}
+tr.first td{border-top:1px solid var(--line)}
+.dchip{display:inline-block;margin-top:4px;font-size:12px;font-weight:700;padding:1px 8px;border-radius:999px;background:var(--chip);color:var(--muted)}
+tr.today .dchip{background:var(--today);color:#fff}
+tr.today td.d{background:var(--today-bg)}
+.badge{font-size:12.5px;font-weight:700;padding:3px 9px;border-radius:6px;white-space:nowrap;display:inline-block}
+.badge.S{background:var(--stage-bg);color:var(--stage)}
+.badge.F{background:var(--final-bg);color:var(--final)}
+.badge.P{background:var(--chip);color:var(--muted)}
+.univ{display:flex;align-items:center;gap:10px;font-weight:500;color:var(--ink)}
+.emb{flex:none;width:28px;height:28px;border-radius:50%;display:grid;place-items:center;font-size:12px;font-weight:900;color:#fff}
+.emb.S{background:var(--stage)} .emb.F{background:var(--final)} .emb.P{background:var(--muted)}
+.dept{color:var(--ink)}
+.typ{font-size:13px;color:var(--muted)}
+.time{font-weight:700;color:var(--brand);white-space:nowrap}
+.studs{display:flex;flex-wrap:wrap;gap:5px}
+.st{font-size:13px;background:var(--chip);border-radius:999px;padding:2px 9px;white-space:nowrap;color:var(--ink)}
+.st .no{font-size:12px;color:var(--muted);margin-right:3px}
+.st.hit{outline:2px solid var(--brand)}
+.empty{padding:48px 0;text-align:center;color:var(--muted)}
+.note{margin-top:28px;font-size:13px;color:var(--muted);line-height:1.7}
+.note b{color:var(--text)}
+
+@media (max-width:980px){
+  .body .in{grid-template-columns:1fr;gap:28px;padding-block:28px 48px}
+}
+@media (max-width:720px){
+  .top .in{gap:12px}
+  .logo{font-size:28px}
+  .nextpill{display:none}
+  .sbar{height:50px;flex-basis:100%}
+  .mi{width:92px}.mi .c{width:64px;height:64px}.mi svg{width:30px;height:30px}.mi span{font-size:14px}
+  table{min-width:0}
+  thead{display:none}
+  table,tbody,tr,td{display:block;width:100%}
+  tr{border-bottom:1px solid var(--line);padding:12px 0;display:grid;grid-template-columns:auto 1fr;gap:6px 12px}
+  td{border:0;padding:0}
+  td.d{grid-column:1;grid-row:1 / span 5;text-align:center;min-width:58px}
+  tr > td:not(.d){grid-column:2;min-width:0}
+  td.empty{grid-column:1 / -1 !important}
+  td.d .md{font-size:16px}
+  tr.cont td.d > *{visibility:visible}
+  tr.today td.d{border-radius:8px;padding:4px}
+  tr.first td{border-top:0}
+}
+</style>
+</head>
+<body>
+<header class="top"><div class="in">
+  <a class="logo" href="#" aria-label="처음으로">cnart28<small>충남예술고 미술과 28기</small></a>
+  <label class="sbar" for="q">
+    <input id="q" type="search" placeholder="학번 · 대학 · 학과를 입력해주세요 (예: 3301, 홍익)" autocomplete="off">
+    <button type="button" aria-label="검색"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg></button>
+  </label>
+  <div class="nextpill" id="pill"></div>
+</div></header>
+
+<nav class="menu" aria-label="보기 선택"><div class="in" id="menu"></div></nav>
+
+<section class="band"><div class="in">
+  <div class="crumb">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 11l8-6 8 6v8a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1z"/></svg>
+    <span class="sep">›</span><span>대입/전형</span><span class="sep">›</span><span>2027 수시</span><span class="sep">›</span><b id="crumbNow">예정 발표</b>
+  </div>
+  <h1>합격자 발표일</h1>
+</div></section>
+
+<section class="body"><div class="in">
+  <aside>
+    <div class="tabs" role="group" aria-label="발표 시기">
+      <button type="button" id="t-up" data-t="up" aria-pressed="true">예정 발표</button>
+      <button type="button" id="t-past" data-t="past" aria-pressed="false">지난 발표</button>
+    </div>
+    <div class="sel"><select id="month" aria-label="월 선택">
+      <option value="all">전체 월</option><option value="10">10월</option><option value="11">11월</option><option value="12">12월</option>
+    </select></div>
+    <form class="sbox" id="sform">
+      <input id="q2" type="search" placeholder="학번을 입력해주세요." inputmode="numeric" autocomplete="off" aria-label="학번 검색">
+      <button type="submit" aria-label="학번 검색"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.4"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg></button>
+    </form>
+    <div class="card" id="nextCard" aria-live="polite"></div>
+    <div class="stats" id="stats"></div>
+    <div class="legend"><span class="badge S">1단계</span><span class="badge F">최초합격</span><span class="badge P">미정</span></div>
+  </aside>
+
+  <main>
+    <div class="total" id="total"></div>
+    <div class="tw"><table>
+      <thead><tr>
+        <th>발표일 <button class="srt" id="s-date" data-s="date" aria-label="발표일 순 정렬">▼</button></th>
+        <th>구분</th>
+        <th>대학명 <button class="srt" id="s-univ" data-s="univ" aria-label="대학명 순 정렬">▼</button></th>
+        <th>모집단위 · 전형</th>
+        <th>시간</th>
+        <th>학생</th>
+      </tr></thead>
+      <tbody id="rows"></tbody>
+    </table></div>
+    <p class="note">같은 날·같은 대학·같은 모집단위·같은 전형은 한 줄로 묶었고, 1차 발표는 1단계로 표시했습니다. D-day는 이 페이지를 연 날 기준으로 자동 계산됩니다. 학생 이름은 개인정보 보호를 위해 가운데 글자를 가렸습니다.<br>
+    <b>최종 발표 일정과 시간은 반드시 각 대학 입학처 공지로 확인하세요.</b><br>
+    일정 기준: 학생별 지원 현황표(그리날다 전형일정 · 아트앤디자인 「2027 대학별 주요 일정표」 교차대조, 각 대학 2027 수시모집요강) — 미술과 28기 담임 쌤이</p>
+  </main>
+</div></section>
+
+<script>
+const DATA = {"rows":[{"d":"2026-10-02","s":"1","u":"서울과학기술대학교","m":"금속공예디자인학과","t":"학종","n":"발표완료","st":[["3302","금○원"],["3421","이○진"]]},{"d":"2026-10-02","s":"1","u":"서울과학기술대학교","m":"도예학과","t":"실기","n":"발표완료","st":[["3423","이○은"]]},{"d":"2026-10-02","s":"1","u":"서울과학기술대학교","m":"조형예술학과","t":"실기","n":"발표완료","st":[["3427","최○진"]]},{"d":"2026-10-07","s":"1","u":"숙명여자대학교","m":"산업디자인과","t":"예능창의인재(실기)","n":"~10.8(목)","st":[["3329","최○윤"]]},{"d":"2026-10-07","s":"1","u":"숙명여자대학교","m":"환경디자인과","t":"예능창의인재(실기)","n":"~10.8(목)","st":[["3301","권○미"]]},{"d":"2026-10-07","s":"1","u":"숙명여자대학교","m":"회화과(서양화)","t":"예능창의인재(실기)","n":"~10.8(목)","st":[["3304","김○윤"],["3309","김○혜"],["3427","최○진"]]},{"d":"2026-10-07","s":"1","u":"숙명여자대학교","m":"회화과(한국화)","t":"예능창의인재(실기)","n":"~10.8(목)","st":[["3318","오○란"],["3325","정○희"],["3403","길○빈"],["3416","안○민"]]},{"d":"2026-10-13","s":"1","u":"국민대학교","m":"미술학부 회화전공","t":"실기우수자","n":"","st":[["3404","김○은"],["3408","김○령"]]},{"d":"2026-10-13","s":"1","u":"중앙대학교(다빈치)","m":"디자인학부 산업디자인전공","t":"실기형","n":"14:00","st":[["3329","최○윤"]]},{"d":"2026-10-13","s":"1","u":"중앙대학교(다빈치)","m":"미술학부 서양화전공","t":"실기형","n":"14:00","st":[["3317","안○서"]]},{"d":"2026-10-13","s":"1","u":"중앙대학교(다빈치)","m":"미술학부 조소전공","t":"실기형","n":"14:00","st":[["3310","김○은"],["3313","노○지"]]},{"d":"2026-10-13","s":"1","u":"중앙대학교(다빈치)","m":"미술학부 한국화전공","t":"실기형","n":"14:00","st":[["3312","김○람"],["3320","이○나"]]},{"d":"2026-10-13","s":"1","u":"중앙대학교(서울)","m":"공간연출전공","t":"실기형","n":"14:00","st":[["3311","김○연"]]},{"d":"2026-10-13","s":"1","u":"한국예술종합학교","m":"연극원 무대미술과","t":"일반전형(10월입시)","n":"17:00","st":[["3311","김○연"],["3404","김○은"]]},{"d":"2026-10-13","s":"1","u":"한양대학교(ERICA)","m":"디자인대학","t":"재능우수자(디자인)","n":"18:00","st":[["3329","최○윤"],["3412","박○훈"]]},{"d":"2026-10-21","s":"1","u":"경희대학교(서울)","m":"미술대학 조소과","t":"실기우수자","n":"18:00","st":[["3310","김○은"],["3409","김○은"]]},{"d":"2026-10-21","s":"1","u":"경희대학교(서울)","m":"미술대학 한국화과","t":"실기우수자","n":"18:00","st":[["3318","오○란"],["3403","길○빈"],["3407","김○안"]]},{"d":"2026-10-21","s":"1","u":"경희대학교(서울)","m":"미술대학 회화과","t":"실기우수자","n":"18:00","st":[["3304","김○윤"],["3305","김○연"],["3309","김○혜"],["3327","조○우"],["3427","최○진"]]},{"d":"2026-10-23","s":"1","u":"고려대학교","m":"디자인조형학부","t":"특기자(디자인조형)","n":"17:00","st":[["3428","함○연"]]},{"d":"2026-10-27","s":"F","u":"숙명여자대학교","m":"산업디자인과","t":"예능창의인재(실기)","n":"17:00","st":[["3329","최○윤"]]},{"d":"2026-10-27","s":"F","u":"숙명여자대학교","m":"환경디자인과","t":"예능창의인재(실기)","n":"17:00","st":[["3301","권○미"]]},{"d":"2026-10-27","s":"F","u":"숙명여자대학교","m":"회화과(서양화)","t":"예능창의인재(실기)","n":"17:00","st":[["3304","김○윤"],["3309","김○혜"],["3427","최○진"]]},{"d":"2026-10-27","s":"F","u":"숙명여자대학교","m":"회화과(한국화)","t":"예능창의인재(실기)","n":"17:00","st":[["3318","오○란"],["3325","정○희"],["3403","길○빈"],["3416","안○민"]]},{"d":"2026-10-30","s":"1","u":"상명대학교(서울)","m":"조형예술전공","t":"상명인재(학종)","n":"14:00","st":[["3321","이○호"]]},{"d":"2026-10-30","s":"F","u":"서울과학기술대학교","m":"금속공예디자인학과","t":"학종","n":"14:00","st":[["3302","금○원"],["3421","이○진"]]},{"d":"2026-10-30","s":"F","u":"서울과학기술대학교","m":"도예학과","t":"실기","n":"14:00","st":[["3423","이○은"]]},{"d":"2026-10-30","s":"F","u":"서울과학기술대학교","m":"조형예술학과","t":"실기","n":"14:00","st":[["3427","최○진"]]},{"d":"2026-11-06","s":"F","u":"동국대학교(WISE)","m":"미술 관련 학과(미기재)","t":"실기우수자","n":"","st":[["3306","김○윤"]]},{"d":"2026-11-06","s":"F","u":"목원대학교","m":"미술교육과","t":"실기","n":"16:00","st":[["3315","박○영"]]},{"d":"2026-11-06","s":"F","u":"목원대학교","m":"미술학부","t":"실기","n":"16:00","st":[["3418","유○채"],["3306","김○윤"]]},{"d":"2026-11-06","s":"F","u":"목원대학교","m":"입체조형학부","t":"실기","n":"16:00","st":[["3315","박○영"]]},{"d":"2026-11-06","s":"F","u":"수원대학교","m":"조형예술학부","t":"실기우수자","n":"17:00 이전","st":[["3418","유○채"],["3308","김○빈"],["3315","박○영"],["3417","오○현"],["3426","정○연"]]},{"d":"2026-11-06","s":"F","u":"수원대학교","m":"커뮤니케이션디자인","t":"실기우수자","n":"17:00 이전","st":[["3411","박○빈"]]},{"d":"2026-11-06","s":"F","u":"수원대학교","m":"패션디자인","t":"실기우수자","n":"17:00 이전","st":[["3406","김○빈"]]},{"d":"2026-11-06","s":"F","u":"한국예술종합학교","m":"연극원 무대미술과","t":"일반전형(10월입시)","n":"17:00","st":[["3311","김○연"],["3404","김○은"]]},{"d":"2026-11-06","s":"F","u":"한성대학교","m":"AI융합디자인학부","t":"실기","n":"14:00","st":[["3303","김○영"],["3326","조○현"],["3406","김○빈"],["3411","박○빈"],["3420","이○연"]]},{"d":"2026-11-06","s":"F","u":"한성대학교","m":"회화과 서양화전공","t":"실기","n":"14:00","st":[["3317","안○서"]]},{"d":"2026-11-07","s":"1","u":"홍익대학교(서울)","m":"금속조형디자인과","t":"미술우수자(학종)","n":"","st":[["3302","금○원"],["3421","이○진"]]},{"d":"2026-11-07","s":"1","u":"홍익대학교(서울)","m":"도예유리과","t":"미술우수자(학종)","n":"","st":[["3423","이○은"]]},{"d":"2026-11-07","s":"1","u":"홍익대학교(서울)","m":"동양화과","t":"미술우수자(학종)","n":"","st":[["3307","김○재"]]},{"d":"2026-11-07","s":"1","u":"홍익대학교(서울)","m":"디자인학부","t":"미술우수자(학종)","n":"","st":[["3413","박○수"]]},{"d":"2026-11-07","s":"1","u":"홍익대학교(서울)","m":"미술대학자율전공","t":"미술우수자(학종)","n":"","st":[["3301","권○미"],["3428","함○연"],["3321","이○호"]]},{"d":"2026-11-07","s":"1","u":"홍익대학교(서울)","m":"예술학과","t":"미술우수자(학종)","n":"","st":[["3321","이○호"]]},{"d":"2026-11-07","s":"1","u":"홍익대학교(서울)","m":"조소과","t":"미술우수자(학종)","n":"","st":[["3311","김○연"]]},{"d":"2026-11-07","s":"1","u":"홍익대학교(서울)","m":"회화과","t":"미술우수자(학종)","n":"","st":[["3422","이○주"]]},{"d":"2026-11-07","s":"1","u":"홍익대학교(세종)","m":"디자인컨버전스학부","t":"미술우수자(학종)","n":"","st":[["3302","금○원"],["3412","박○훈"]]},{"d":"2026-11-10","s":"F","u":"국민대학교","m":"미술학부 회화전공","t":"실기우수자","n":"","st":[["3404","김○은"],["3408","김○령"]]},{"d":"2026-11-11","s":"F","u":"인천가톨릭대학교","m":"조형예술학과","t":"실기우수자","n":"11:00 이후","st":[["3319","이○연"]]},{"d":"2026-11-12","s":"1","u":"이화여자대학교","m":"조형예술대학 디자인학부","t":"예체능서류(학종)","n":"","st":[["3301","권○미"],["3302","금○원"],["3413","박○수"],["3421","이○진"],["3428","함○연"],["3321","이○호"]]},{"d":"2026-11-13","s":"1","u":"세종대학교","m":"디자인이노베이션전공","t":"세종인재(면접형, 학종)","n":"","st":[["3302","금○원"],["3413","박○수"],["3428","함○연"],["3321","이○호"]]},{"d":"2026-11-13","s":"1","u":"전남대학교","m":"미술학과(조소)","t":"예능실기","n":"15:00","st":[["3426","정○연"]]},{"d":"2026-11-13","s":"1","u":"전남대학교","m":"미술학과(한국화)","t":"예능실기","n":"15:00","st":[["3312","김○람"]]},{"d":"2026-11-13","s":"F","u":"서울여자대학교","m":"공예_컬렉티브디자인전공","t":"실기우수자(미술)","n":"18:00","st":[["3414","송○영"]]},{"d":"2026-11-13","s":"F","u":"서울여자대학교","m":"시각디자인전공","t":"실기우수자(미술)","n":"18:00","st":[["3406","김○빈"]]},{"d":"2026-11-13","s":"F","u":"서울여자대학교","m":"현대미술전공","t":"실기우수자(미술)","n":"18:00","st":[["3304","김○윤"],["3404","김○은"],["3410","문○영"]]},{"d":"2026-11-13","s":"F","u":"성신여자대학교","m":"공예과","t":"일반학생(실기)","n":"10:00","st":[["3326","조○현"],["3424","임○진"],["3308","김○빈"]]},{"d":"2026-11-13","s":"F","u":"성신여자대학교","m":"동양화과","t":"일반학생(실기)","n":"10:00","st":[["3312","김○람"],["3318","오○란"],["3320","이○나"],["3325","정○희"],["3416","안○민"]]},{"d":"2026-11-13","s":"F","u":"성신여자대학교","m":"디자인과","t":"일반학생(실기)","n":"10:00","st":[["3406","김○빈"],["3419","유○랑"],["3420","이○연"]]},{"d":"2026-11-13","s":"F","u":"성신여자대학교","m":"서양화과","t":"일반학생(실기)","n":"10:00","st":[["3305","김○연"],["3322","이○정"],["3327","조○우"]]},{"d":"2026-11-13","s":"F","u":"성신여자대학교","m":"조소과","t":"일반학생(실기)","n":"10:00","st":[["3319","이○연"],["3324","정○원"],["3409","김○은"],["3415","신○민"],["3426","정○연"]]},{"d":"2026-11-13","s":"F","u":"추계예술대학교","m":"미술창작학부(수채·소묘)","t":"일반학생(실기)","n":"14:00","st":[["3309","김○혜"],["3418","유○채"]]},{"d":"2026-11-13","s":"F","u":"한남대학교","m":"미술 관련 학과(미기재)","t":"실기","n":"17:00 이후","st":[["3418","유○채"]]},{"d":"2026-11-13","s":"F","u":"한남대학교","m":"미술교육과","t":"실기","n":"17:00 이후","st":[["3412","박○훈"],["3315","박○영"]]},{"d":"2026-11-14","s":"F","u":"가천대학교","m":"산업디자인전공","t":"실기우수자","n":"","st":[["3412","박○훈"]]},{"d":"2026-11-14","s":"F","u":"가천대학교","m":"조소전공","t":"실기우수자","n":"","st":[["3308","김○빈"],["3417","오○현"]]},{"d":"2026-11-17","s":"1","u":"국민대학교","m":"AI디자인학과","t":"국민프론티어(학종)","n":"","st":[["3413","박○수"]]},{"d":"2026-11-17","s":"1","u":"국민대학교","m":"조형대학 (디자인 학과 미기재)","t":"국민프론티어(학종)","n":"","st":[["3421","이○진"],["3321","이○호"]]},{"d":"2026-11-17","s":"F","u":"동덕여자대학교","m":"디자인대학 (전공 미기재)","t":"실기우수자","n":"17:00","st":[["3419","유○랑"]]},{"d":"2026-11-17","s":"F","u":"동덕여자대학교","m":"디자인대학 시각디자인전공 / 실내디자인전공","t":"실기우수자","n":"17:00","st":[["3303","김○영"],["3329","최○윤"]]},{"d":"2026-11-17","s":"F","u":"동덕여자대학교","m":"디지털공예전공","t":"실기우수자","n":"17:00","st":[["3316","송○서"],["3326","조○현"]]},{"d":"2026-11-17","s":"F","u":"동덕여자대학교","m":"미디어디자인전공","t":"실기우수자","n":"17:00","st":[["3420","이○연"]]},{"d":"2026-11-17","s":"F","u":"동덕여자대학교","m":"시각디자인전공","t":"실기우수자","n":"17:00","st":[["3406","김○빈"]]},{"d":"2026-11-17","s":"F","u":"동덕여자대학교","m":"실내디자인전공","t":"실기우수자","n":"17:00","st":[["3420","이○연"]]},{"d":"2026-11-17","s":"F","u":"동덕여자대학교","m":"예술대학 회화과(서양화)","t":"실기우수자","n":"17:00","st":[["3304","김○윤"],["3305","김○연"],["3327","조○우"],["3404","김○은"],["3410","문○영"],["3425","전○림"]]},{"d":"2026-11-17","s":"F","u":"동덕여자대학교","m":"예술대학 회화과(한국화)","t":"실기우수자","n":"17:00","st":[["3320","이○나"],["3325","정○희"]]},{"d":"2026-11-17","s":"F","u":"동덕여자대학교","m":"패션디자인전공","t":"실기우수자","n":"17:00","st":[["3411","박○빈"],["3414","송○영"],["3424","임○진"]]},{"d":"2026-11-17","s":"F","u":"인하대학교","m":"조형예술학과","t":"실기우수자","n":"","st":[["3309","김○혜"]]},{"d":"2026-11-17","s":"F","u":"중앙대학교(다빈치)","m":"디자인학부 산업디자인전공","t":"실기형","n":"14:00","st":[["3329","최○윤"]]},{"d":"2026-11-17","s":"F","u":"중앙대학교(다빈치)","m":"미술학부 서양화전공","t":"실기형","n":"14:00","st":[["3317","안○서"]]},{"d":"2026-11-17","s":"F","u":"중앙대학교(다빈치)","m":"미술학부 조소전공","t":"실기형","n":"14:00","st":[["3310","김○은"],["3313","노○지"]]},{"d":"2026-11-17","s":"F","u":"중앙대학교(다빈치)","m":"미술학부 한국화전공","t":"실기형","n":"14:00","st":[["3312","김○람"],["3320","이○나"]]},{"d":"2026-11-17","s":"F","u":"중앙대학교(서울)","m":"공간연출전공","t":"실기형","n":"14:00","st":[["3311","김○연"]]},{"d":"2026-11-17","s":"F","u":"청주대학교","m":"산업디자인학과","t":"예체능(실기)","n":"14:00","st":[["3303","김○영"]]},{"d":"2026-11-20","s":"1","u":"경기대학교(수원)","m":"디자인학부","t":"KGU학생부종합(학종)","n":"","st":[["3421","이○진"]]},{"d":"2026-11-20","s":"1","u":"서울과학기술대학교","m":"디자인학과 시각디자인전공","t":"학교생활우수자(학종)","n":"14:00","st":[["3301","권○미"],["3413","박○수"]]},{"d":"2026-11-20","s":"1","u":"서울대학교","m":"미술대학 동양화과","t":"※서류형 전형 없음 → 기회균형(사회통합)만 가능","n":"","st":[["3307","김○재"]]},{"d":"2026-11-20","s":"1","u":"서울대학교","m":"학부대학 자유전공학부","t":"일반전형(학종)","n":"18:00 이후","st":[["3422","이○주"]]},{"d":"2026-11-20","s":"F","u":"경기대학교(수원)","m":"Fine Arts 학부","t":"예능실기우수자","n":"","st":[["3322","이○정"],["3418","유○채"],["3425","전○림"]]},{"d":"2026-11-20","s":"F","u":"경기대학교(수원)","m":"입체조형학과","t":"예능실기우수자","n":"","st":[["3411","박○빈"]]},{"d":"2026-11-20","s":"F","u":"국립창원대학교","m":"미술학과(한국화)","t":"예체능(실기)","n":"14:00","st":[["3306","김○윤"]]},{"d":"2026-11-20","s":"F","u":"평택대학교","m":"커뮤니케이션디자인(전공)","t":"PTU실기","n":"17:00 이전","st":[["3303","김○영"]]},{"d":"2026-11-24","s":"F","u":"국립군산대학교","m":"미술학과","t":"일반전형_미술","n":"18:00 이전","st":[["3306","김○윤"]]},{"d":"2026-11-24","s":"F","u":"부산대학교","m":"예술대학 미술학과 조소전공","t":"실기","n":"16:00","st":[["3319","이○연"]]},{"d":"2026-11-24","s":"F","u":"상명대학교(천안)","m":"디자인학부","t":"실기","n":"10:00","st":[["3329","최○윤"],["3412","박○훈"],["3420","이○연"],["3423","이○은"],["3424","임○진"]]},{"d":"2026-11-24","s":"F","u":"호서대학교","m":"디지털프로덕트디자인학과","t":"실기","n":"","st":[["3303","김○영"]]},{"d":"2026-11-24","s":"F","u":"호서대학교","m":"학과 미기재","t":"실기","n":"","st":[["3424","임○진"]]},{"d":"2026-11-25","s":"F","u":"경희대학교(국제)","m":"산업디자인학과","t":"실기우수자","n":"18:00","st":[["3316","송○서"],["3329","최○윤"]]},{"d":"2026-11-25","s":"F","u":"경희대학교(국제)","m":"시각디자인학과","t":"실기우수자","n":"18:00","st":[["3412","박○훈"]]},{"d":"2026-11-25","s":"F","u":"경희대학교(서울)","m":"미술대학 조소과","t":"실기우수자","n":"18:00","st":[["3310","김○은"],["3409","김○은"]]},{"d":"2026-11-25","s":"F","u":"경희대학교(서울)","m":"미술대학 한국화과","t":"실기우수자","n":"18:00","st":[["3318","오○란"],["3403","길○빈"],["3407","김○안"]]},{"d":"2026-11-25","s":"F","u":"경희대학교(서울)","m":"미술대학 회화과","t":"실기우수자","n":"18:00","st":[["3304","김○윤"],["3305","김○연"],["3309","김○혜"],["3327","조○우"],["3427","최○진"]]},{"d":"2026-11-27","s":"F","u":"단국대학교(천안)","m":"공예(금속·섬유)전공","t":"실기우수자","n":"18:00","st":[["3326","조○현"]]},{"d":"2026-11-27","s":"F","u":"단국대학교(천안)","m":"동양화전공","t":"실기우수자","n":"18:00","st":[["3312","김○람"],["3320","이○나"],["3325","정○희"],["3416","안○민"]]},{"d":"2026-11-27","s":"F","u":"단국대학교(천안)","m":"서양화전공","t":"실기우수자","n":"18:00","st":[["3304","김○윤"],["3309","김○혜"],["3322","이○정"],["3328","조○레"],["3410","문○영"],["3425","전○림"]]},{"d":"2026-11-27","s":"F","u":"단국대학교(천안)","m":"조소전공","t":"실기우수자","n":"18:00","st":[["3308","김○빈"],["3310","김○은"],["3315","박○영"],["3319","이○연"],["3417","오○현"],["3426","정○연"]]},{"d":"2026-11-27","s":"F","u":"백석대학교","m":"학과 미기재","t":"일반(실기)","n":"17:00 이후","st":[["3424","임○진"]]},{"d":"2026-12-01","s":"F","u":"동국대학교(서울)","m":"미술학부 서양화전공","t":"실기","n":"","st":[["3304","김○윤"],["3305","김○연"],["3309","김○혜"],["3317","안○서"],["3327","조○우"],["3404","김○은"],["3410","문○영"],["3427","최○진"]]},{"d":"2026-12-01","s":"F","u":"동국대학교(서울)","m":"미술학부 한국화전공","t":"실기","n":"","st":[["3306","김○윤"],["3312","김○람"],["3320","이○나"],["3325","정○희"],["3416","안○민"]]},{"d":"2026-12-03","s":"F","u":"상명대학교(서울)","m":"생활예술전공","t":"실기","n":"09:00","st":[["3326","조○현"],["3419","유○랑"]]},{"d":"2026-12-03","s":"F","u":"상명대학교(서울)","m":"조형예술전공","t":"실기","n":"09:00","st":[["3317","안○서"],["3322","이○정"],["3327","조○우"]]},{"d":"2026-12-03","s":"F","u":"상명대학교(서울)","m":"조형예술전공","t":"상명인재(학종)","n":"09:00","st":[["3321","이○호"]]},{"d":"2026-12-09","s":"F","u":"명지대학교(자연캠퍼스)","m":"비주얼커뮤니케이션디자인전공","t":"실기우수자","n":"15:00","st":[["3424","임○진"]]},{"d":"2026-12-09","s":"F","u":"명지대학교(자연캠퍼스)","m":"패션디자인전공","t":"실기우수자","n":"15:00","st":[["3406","김○빈"]]},{"d":"2026-12-10","s":"1","u":"한국예술종합학교","m":"미술원(학과 미기재)","t":"일반전형(11월입시)","n":"","st":[["3328","조○레"]]},{"d":"2026-12-17","s":"F","u":"건국대학교(글로컬)","m":"디자인조형자유전공학부","t":"실기우수자-지역인재","n":"","st":[["3420","이○연"]]},{"d":"2026-12-17","s":"F","u":"건국대학교(글로컬)","m":"시각영상디자인학과","t":"실기우수자-지역인재","n":"","st":[["3303","김○영"]]},{"d":"2026-12-17","s":"F","u":"건국대학교(글로컬)","m":"조형예술학과","t":"실기우수자","n":"","st":[["3411","박○빈"]]},{"d":"2026-12-17","s":"F","u":"이화여자대학교","m":"조형예술대학 디자인학부","t":"예체능서류(학종)","n":"","st":[["3301","권○미"],["3302","금○원"],["3413","박○수"],["3421","이○진"],["3428","함○연"],["3321","이○호"]]},{"d":"2026-12-18","s":"F","u":"강남대학교","m":"디자인학과","t":"실기","n":"","st":[["3411","박○빈"]]},{"d":"2026-12-18","s":"F","u":"경기대학교(수원)","m":"디자인학부","t":"KGU학생부종합(학종)","n":"까지","st":[["3421","이○진"]]},{"d":"2026-12-18","s":"F","u":"경북대학교","m":"예술대학 미술학과(조소)","t":"실기전형(예능)","n":"16:00","st":[["3319","이○연"],["3417","오○현"]]},{"d":"2026-12-18","s":"F","u":"경상국립대학교","m":"미술교육과","t":"실기","n":"16:00","st":[["3425","전○림"]]},{"d":"2026-12-18","s":"F","u":"경희대학교(국제)","m":"도예학과","t":"지역균형(교과, 학교장추천)","n":"18:00","st":[["3421","이○진"],["3423","이○은"]]},{"d":"2026-12-18","s":"F","u":"경희대학교(국제)","m":"도예학과","t":"네오르네상스(학종)","n":"18:00","st":[["3423","이○은"]]},{"d":"2026-12-18","s":"F","u":"경희대학교(국제)","m":"시각디자인학과","t":"네오르네상스(학종)","n":"18:00","st":[["3413","박○수"]]},{"d":"2026-12-18","s":"F","u":"경희대학교(국제)","m":"의류디자인학과","t":"네오르네상스(학종)","n":"18:00","st":[["3428","함○연"]]},{"d":"2026-12-18","s":"F","u":"고려대학교","m":"디자인조형학부","t":"특기자(디자인조형)","n":"17:00","st":[["3428","함○연"]]},{"d":"2026-12-18","s":"F","u":"국민대학교","m":"AI디자인학과","t":"국민프론티어(학종)","n":"","st":[["3413","박○수"]]},{"d":"2026-12-18","s":"F","u":"국민대학교","m":"조형대학 (디자인 학과 미기재)","t":"국민프론티어(학종)","n":"","st":[["3421","이○진"],["3321","이○호"]]},{"d":"2026-12-18","s":"F","u":"덕성여자대학교","m":"Art&Design대학","t":"미술실기","n":"17:00","st":[["3308","김○빈"]]},{"d":"2026-12-18","s":"F","u":"덕성여자대학교","m":"Art&Design대학 (기초디자인 실기)","t":"미술실기","n":"17:00","st":[["3326","조○현"]]},{"d":"2026-12-18","s":"F","u":"덕성여자대학교","m":"Art&Design대학 (인체수채화/기초소양)","t":"미술실기","n":"17:00","st":[["3305","김○연"],["3327","조○우"],["3404","김○은"],["3410","문○영"],["3425","전○림"]]},{"d":"2026-12-18","s":"F","u":"서울과학기술대학교","m":"디자인학과 시각디자인전공","t":"학교생활우수자(학종)","n":"14:00","st":[["3301","권○미"],["3413","박○수"]]},{"d":"2026-12-18","s":"F","u":"서울대학교","m":"미술대학 동양화과","t":"※서류형 전형 없음 → 기회균형(사회통합)만 가능","n":"","st":[["3307","김○재"]]},{"d":"2026-12-18","s":"F","u":"서울대학교","m":"학부대학 자유전공학부","t":"일반전형(학종)","n":"18:00 이후","st":[["3422","이○주"]]},{"d":"2026-12-18","s":"F","u":"세종대학교","m":"디자인이노베이션전공","t":"세종인재(면접형, 학종)","n":"17:00 이후","st":[["3302","금○원"],["3413","박○수"],["3428","함○연"],["3321","이○호"]]},{"d":"2026-12-18","s":"F","u":"인천대학교","m":"서양화전공","t":"실기우수자","n":"","st":[["3317","안○서"],["3322","이○정"]]},{"d":"2026-12-18","s":"F","u":"인천대학교","m":"한국화전공","t":"실기우수자","n":"","st":[["3416","안○민"]]},{"d":"2026-12-18","s":"F","u":"전남대학교","m":"미술학과(조소)","t":"예능실기","n":"15:00","st":[["3426","정○연"]]},{"d":"2026-12-18","s":"F","u":"전남대학교","m":"미술학과(한국화)","t":"예능실기","n":"15:00","st":[["3312","김○람"]]},{"d":"2026-12-18","s":"F","u":"전북대학교","m":"미술학과(조소)","t":"예체능-실기","n":"14:00","st":[["3426","정○연"]]},{"d":"2026-12-18","s":"F","u":"전북대학교","m":"미술학과(한국화)","t":"예체능-실기","n":"14:00","st":[["3306","김○윤"]]},{"d":"2026-12-18","s":"F","u":"중앙대학교(다빈치)","m":"실내환경디자인전공","t":"융합형인재(학종, 서류100)","n":"14:00","st":[["3301","권○미"],["3302","금○원"]]},{"d":"2026-12-18","s":"F","u":"충남대학교","m":"예술대학 회화과(서양화)","t":"일반(실기)","n":"15:00 이후","st":[["3317","안○서"],["3322","이○정"],["3410","문○영"],["3418","유○채"],["3425","전○림"]]},{"d":"2026-12-18","s":"F","u":"충남대학교","m":"예술대학 회화과(한국화)","t":"일반(실기)","n":"15:00 이후","st":[["3312","김○람"],["3320","이○나"],["3325","정○희"],["3416","안○민"]]},{"d":"2026-12-18","s":"F","u":"충남대학교","m":"조소과","t":"일반(실기)","n":"15:00 이후","st":[["3308","김○빈"],["3310","김○은"],["3314","박○율"],["3315","박○영"],["3319","이○연"],["3415","신○민"],["3417","오○현"],["3426","정○연"]]},{"d":"2026-12-18","s":"F","u":"충북대학교","m":"미술 관련 학과(조소)","t":"실기우수자","n":"17:00","st":[["3314","박○율"],["3417","오○현"]]},{"d":"2026-12-18","s":"F","u":"한양대학교(ERICA)","m":"디자인대학","t":"재능우수자(디자인)","n":"18:00","st":[["3329","최○윤"],["3412","박○훈"]]},{"d":"2026-12-18","s":"F","u":"한양대학교(ERICA)","m":"디자인대학 (학과 미기재)","t":"학생부종합(서류형)","n":"18:00","st":[["3316","송○서"]]},{"d":"2026-12-18","s":"F","u":"홍익대학교(서울)","m":"금속조형디자인과","t":"미술우수자(학종)","n":"","st":[["3302","금○원"],["3421","이○진"]]},{"d":"2026-12-18","s":"F","u":"홍익대학교(서울)","m":"도예유리과","t":"미술우수자(학종)","n":"","st":[["3423","이○은"]]},{"d":"2026-12-18","s":"F","u":"홍익대학교(서울)","m":"동양화과","t":"미술우수자(학종)","n":"","st":[["3307","김○재"]]},{"d":"2026-12-18","s":"F","u":"홍익대학교(서울)","m":"동양화과(추정)","t":"학교장추천자(교과)","n":"","st":[["3307","김○재"]]},{"d":"2026-12-18","s":"F","u":"홍익대학교(서울)","m":"동양화과(추정)","t":"학교생활우수자(학종, 서류)","n":"","st":[["3307","김○재"]]},{"d":"2026-12-18","s":"F","u":"홍익대학교(서울)","m":"디자인학부","t":"미술우수자(학종)","n":"","st":[["3413","박○수"]]},{"d":"2026-12-18","s":"F","u":"홍익대학교(서울)","m":"미술대학자율전공","t":"미술우수자(학종)","n":"","st":[["3301","권○미"],["3428","함○연"],["3321","이○호"]]},{"d":"2026-12-18","s":"F","u":"홍익대학교(서울)","m":"서울캠퍼스자율전공(인문·예능)","t":"전형 미기재","n":"","st":[["3428","함○연"]]},{"d":"2026-12-18","s":"F","u":"홍익대학교(서울)","m":"예술학과","t":"미술우수자(학종)","n":"","st":[["3321","이○호"]]},{"d":"2026-12-18","s":"F","u":"홍익대학교(서울)","m":"조소과","t":"미술우수자(학종)","n":"","st":[["3311","김○연"]]},{"d":"2026-12-18","s":"F","u":"홍익대학교(서울)","m":"회화과","t":"미술우수자(학종)","n":"","st":[["3422","이○주"]]},{"d":"2026-12-18","s":"F","u":"홍익대학교(세종)","m":"디자인컨버전스학부","t":"미술우수자(학종)","n":"","st":[["3302","금○원"],["3412","박○훈"]]},{"d":"2026-12-18","s":"F","u":"홍익대학교(세종)","m":"캠퍼스자율전공(인문·예능)","t":"전형 미기재(교과우수자/학교생활우수자)","n":"","st":[["3301","권○미"]]},{"d":"2026-12-18","s":"F","u":"홍익대학교(세종)","m":"캠퍼스자율전공(인문·예능)","t":"학교생활우수자(학종, 서류)","n":"","st":[["3423","이○은"]]},{"d":"2026-12-24","s":"F","u":"한국예술종합학교","m":"미술원(학과 미기재)","t":"일반전형(11월입시)","n":"17:00","st":[["3328","조○레"]]}],"pend":[{"u":"한국방송통신대학교","m":"학과 미기재","t":"2027-1학기 신입생 모집","n":"미발표 (등록 12월~ 예상)","st":[["3401","최○나"]]},{"u":"한국열린사이버대학교","m":"학과 미기재","t":"2027-1학기 신입생 모집","n":"미발표 (12월경 예상)","st":[["3401","최○나"]]}]};
+const WD=['일','월','화','수','목','금','토'];
+const today=(()=>{const n=new Date();return new Date(n.getFullYear(),n.getMonth(),n.getDate());})();
+const toDate=s=>{const [y,m,d]=s.split('-').map(Number);return new Date(y,m-1,d);};
+const diff=s=>Math.round((toDate(s)-today)/86400000);
+const ddLabel=n=>n>0?`D-${n}`:n===0?'D-DAY':'지남';
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const STAGE={S:'1단계',F:'최초합격',P:'미정'};
+DATA.rows.forEach(r=>r.k=r.s==='1'?'S':'F');
+DATA.pend.forEach(r=>{r.k='P';r.d=null;});
+
+const ICON={
+ all:'<path d="M4 6h16M4 12h16M4 18h10"/>',
+ S:'<rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 8h6M9 12h6M9 16h3"/>',
+ F:'<circle cx="12" cy="10" r="6"/><path d="M9 10l2 2 4-4M8.5 15l-1.5 6 5-2.5 5 2.5-1.5-6"/>',
+ week:'<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4M8 14h3v3H8z"/>',
+ past:'<circle cx="12" cy="12" r="8"/><path d="M12 8v4l3 2M4 4v4h4"/>',
+ pend:'<circle cx="12" cy="12" r="8"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.6.3-1 .8-1 1.5V14M12 17h.01"/>'
+};
+const ICOLOR={all:'var(--brand)',S:'var(--stage)',F:'var(--final)',week:'var(--today)',past:'var(--muted)',pend:'var(--muted)'};
+const MENU=[['all','전체 발표'],['S','1단계'],['F','최초합격'],['week','이번 주'],['past','지난 발표'],['pend','발표 미정']];
+
+let st={t:'up',f:'all',week:false,month:'all',q:'',sort:'date'};
+try{const s=JSON.parse(localStorage.getItem('cal28b')||'{}');if(s.t)st.t=s.t;}catch(e){}
+
+function menuKey(){ if(st.t==='past')return 'past'; if(st.t==='pend')return 'pend'; if(st.week)return 'week'; return st.f; }
+function counts(){
+  const up=DATA.rows.filter(r=>diff(r.d)>=0);
+  return {all:up.length,S:up.filter(r=>r.k==='S').length,F:up.filter(r=>r.k==='F').length,
+    week:up.filter(r=>diff(r.d)<=6).length,past:DATA.rows.length-up.length,pend:DATA.pend.length};
+}
+function drawMenu(){
+  const c=counts(),k=menuKey();
+  document.getElementById('menu').innerHTML=MENU.map(([id,l])=>`<button type="button" class="mi" id="m-${id}" data-m="${id}" aria-pressed="${k===id}">
+    <span class="c"><svg viewBox="0 0 24 24" fill="none" stroke="${ICOLOR[id]}" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">${ICON[id]}</svg></span>
+    <span>${l}</span><span class="n">${c[id]}건</span></button>`).join('');
+  document.querySelectorAll('.mi').forEach(b=>b.onclick=()=>{
+    const m=b.dataset.m; st.week=false; st.f='all';
+    if(m==='past')st.t='past'; else if(m==='pend')st.t='pend'; else {st.t='up'; if(m==='week')st.week=true; else st.f=m;}
+    render();
+  });
+}
+function side(){
+  const up=DATA.rows.filter(r=>diff(r.d)>=0), c=counts();
+  const card=document.getElementById('nextCard'), pill=document.getElementById('pill');
+  if(up.length){
+    const d=up[0].d, same=up.filter(r=>r.d===d), dt=toDate(d), n=same.reduce((a,r)=>a+r.st.length,0);
+    const u=[...new Set(same.map(r=>r.u))];
+    card.innerHTML=`<div class="lbl">다음 발표</div><div class="dd">${ddLabel(diff(d))}</div>
+      <div class="sub"><b>${dt.getMonth()+1}.${dt.getDate()}(${WD[dt.getDay()]})</b> · ${same.length}건, 학생 ${n}명<br>${esc(u.slice(0,3).join(', '))}${u.length>3?` 외 ${u.length-3}곳`:''}</div>`;
+    pill.innerHTML=`다음 발표 <span class="dot">${ddLabel(diff(d))}</span>`;
+  } else { card.innerHTML='<div class="lbl">다음 발표</div><div class="dd">완료</div><div class="sub">예정된 수시 발표가 모두 끝났습니다.</div>'; pill.innerHTML=''; }
+  document.getElementById('stats').innerHTML=
+    `<button type="button" class="stat" id="st-up" data-t="up">남은 발표<b>${c.all}건</b></button>
+     <button type="button" class="stat past" id="st-past" data-t="past">지난 발표 보기<b>${c.past}건 ›</b></button>`;
+  document.querySelectorAll('.stat').forEach(b=>b.onclick=()=>{st.t=b.dataset.t;st.week=false;st.f='all';render();});
+}
+const match=(r,q)=>!q||r.u.includes(q)||r.m.includes(q)||r.t.includes(q)||r.st.some(s=>s[0].includes(q)||s[1].includes(q));
+
+function render(){
+  const q=st.q.trim();
+  let rows;
+  if(st.t==='pend') rows=DATA.pend.filter(r=>match(r,q));
+  else {
+    rows=DATA.rows.filter(r=>{
+      const n=diff(r.d);
+      if(st.t==='up'&&n<0)return false; if(st.t==='past'&&n>=0)return false;
+      if(st.week&&n>6)return false; if(st.f!=='all'&&r.k!==st.f)return false;
+      if(st.month!=='all'&&toDate(r.d).getMonth()+1!==+st.month)return false;
+      return match(r,q);});
+    if(st.sort==='univ') rows=[...rows].sort((a,b)=>a.u.localeCompare(b.u,'ko')||a.d.localeCompare(b.d));
+    else if(st.t==='past') rows=[...rows].sort((a,b)=>b.d.localeCompare(a.d));
+  }
+  const ppl=new Set(rows.flatMap(r=>r.st.map(s=>s[0]))).size;
+  const label={up:st.week?'이번 주 발표':(st.f==='all'?'예정 발표':STAGE[st.f]+' 예정'),past:'지난 발표',pend:'발표 미정'}[st.t];
+  document.getElementById('total').innerHTML=`<span>총 <em>${rows.length}</em>건</span><small>${label} · 학생 ${ppl}명</small>`;
+  document.getElementById('crumbNow').textContent=label;
+  let prev=null;
+  document.getElementById('rows').innerHTML=rows.map(r=>{
+    let dcell, cls='';
+    if(r.d){ const dt=toDate(r.d),n=diff(r.d); const cont=st.sort==='date'&&prev===r.d; prev=r.d;
+      cls=(cont?'cont':'first')+(n===0?' today':'');
+      dcell=`<div class="md">${dt.getMonth()+1}.${dt.getDate()}</div><div class="wd">${WD[dt.getDay()]}요일</div><span class="dchip">${ddLabel(n)}</span>`;
+    } else dcell='<div class="md">미정</div>';
+    const studs=r.st.map(s=>`<span class="st${q&&(s[0].includes(q)||s[1].includes(q))?' hit':''}"><span class="no">${s[0]}</span>${esc(s[1])}</span>`).join('');
+    return `<tr class="${cls}"><td class="d">${dcell}</td>
+      <td><span class="badge ${r.k}">${STAGE[r.k]}</span></td>
+      <td><div class="univ"><span class="emb ${r.k}">${esc(r.u[0])}</span>${esc(r.u)}</div></td>
+      <td><div class="dept">${esc(r.m)}</div><div class="typ">${esc(r.t)}</div></td>
+      <td>${r.n?`<span class="time">${esc(r.n)}</span>`:'<span class="typ">-</span>'}</td>
+      <td><div class="studs">${studs}</div></td></tr>`;
+  }).join('') || `<tr><td colspan="6" class="empty">조건에 맞는 발표가 없습니다. 검색어나 월 선택을 바꿔 보세요.</td></tr>`;
+  document.querySelectorAll('.tabs button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.t===st.t));
+  document.querySelectorAll('.srt').forEach(b=>b.dataset.on=b.dataset.s===st.sort?'1':'0');
+  drawMenu(); side();
+  try{localStorage.setItem('cal28b',JSON.stringify({t:st.t==='pend'?'up':st.t}));}catch(e){}
+}
+const qs=[document.getElementById('q'),document.getElementById('q2')];
+qs.forEach(inp=>inp.addEventListener('input',e=>{st.q=e.target.value;qs.forEach(o=>{if(o!==inp)o.value=st.q;});render();}));
+document.getElementById('sform').addEventListener('submit',e=>{e.preventDefault();render();});
+document.querySelectorAll('.tabs button').forEach(b=>b.onclick=()=>{st.t=b.dataset.t;st.week=false;st.f='all';render();});
+document.getElementById('month').onchange=e=>{st.month=e.target.value;render();};
+document.querySelectorAll('.srt').forEach(b=>b.onclick=()=>{st.sort=b.dataset.s;render();});
+render();
+</script>
+</body>
+</html>
